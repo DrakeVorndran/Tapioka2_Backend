@@ -8,10 +8,15 @@ router.get('/new', (req, res) => {
 
 router.post('/new', (req, res) => {
   console.log(req.body)
-  post = new Post(req.body)
-  post.save()
+  Post.create(req.body).then(post => {
+    res.json({ id: post._id })
+  })
+})
+
+router.get('/:id', (req, res) => {
+  Post.findById(req.params.id)
   .then(post => {
-    res.json({id: post._id})
+    res.json(post)
   })
 })
 
